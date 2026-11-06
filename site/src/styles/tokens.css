@@ -1,0 +1,61 @@
+/* Design tokens: Direction E (design-reference/, GAL-301). */
+:root {
+  /* Color */
+  --ink: #1B1F23;
+  --ink-muted: #3E454C;
+  --ink-subtle: #5A6168;
+  --cream: #F7F6F2;
+  --stone: #ECE8DE;
+  --white: #FFFFFF;
+  --rule: #E6E3DA;
+  --teal-deep: #0F5E5A;   /* primary buttons, focus rings, small accents ONLY */
+  --teal-mid: #2F7A73;    /* headline accent, care-team text bubble, join section background */
+  --teal-dark: #24635D;   /* unselected membership card */
+  --teal-line: #8FBCB6;   /* unselected card border */
+  --mint-text: #F0F7F5;   /* body text on teal-mid */
+
+  /* Color: values taken from the design-reference files, not in the base token list */
+  --teal-deep-hover: #0A403D; /* link hover */
+  --ring-unselected: #A9CBC6; /* empty ring on an unselected membership card */
+  --panel-tint: #F2F6F5;      /* employer fields panel */
+  --rule-footer: #E0DCD1;     /* footer divider, mobile */
+  /* The reference uses #9AA0A6 (2.6:1 on white). Darkened to reach the 3:1 that
+     WCAG 1.4.11 asks of input borders, on white and on --panel-tint. */
+  --field-border: #878D93;
+
+  /* Color: form error states. Not designed yet (GAL-303); provisional. */
+  --error: #B42318;
+  --error-tint: #FDF2F1;
+
+  /* Radius */
+  --radius-btn: 12px;
+  --radius-input: 10px;
+  --radius-card: 16px;
+  --radius-panel: 20px;
+  --radius-hero-card: 24px;
+  --radius-tint: 14px;
+
+  /* Type */
+  --font-display: var(--font-newsreader);
+  --font-body: var(--font-inter-tight);
+
+  /* Type scale. Use only these sizes; each step is at least 3px from the next. */
+  --fs-1: 13px; /* small print, eyebrow labels */
+  --fs-2: 16px; /* body, form and button text */
+  --fs-3: 20px; /* intro paragraphs (desktop), small headings */
+  --fs-4: 24px; /* card titles, wordmark */
+  --fs-5: 32px; /* section headings (mobile), panel headings */
+  --fs-6: 40px; /* section headings (desktop), H1 (mobile), prices */
+  --fs-7: 56px; /* H1 (desktop) */
+
+  /* Layout */
+  --max-w: 1200px;
+  --max-w-join: 760px;
+  --gutter: 20px;
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 24px;
+  }
+}

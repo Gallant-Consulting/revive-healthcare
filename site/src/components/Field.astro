@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  name: string;
+  label: string;
+  hint?: string;
+  /** Extra ids for aria-describedby, after the error message. */
+  describedBy?: string;
+  options?: { value: string; label: string }[];
+} & Omit<HTMLAttributes<'input'>, 'name' | 'id'>;
+
+const { name, label, hint, describedBy, options, class: className, ...attrs } = Astro.props;
+const id = `waitlist-${name}`;
+const errorId = `${id}-error`;
+const describedByIds = [errorId, describedBy].filter(Boolean).join(' ');
+---
+
+<div class:list={['field', className]} data-field={name}>
+  <label class="field__label" for={id}>
+    {label}
+    {hint && <span class="field__hint">{hint}</span>}
+  </label>
+  {
+    options ? (
+      <select class="field__input" id={id} name={name} aria-describedby={describedByIds} required={attrs.required}>
+        {options.map((option) => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    ) : (
+      <input class="field__input" id={id} name={name} aria-describedby={describedByIds} {...attrs} />
+    )
+  }
+  <p class="field__error" id={errorId} hidden>
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+      <path d="M8 4.5v4.25" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+      <circle cx="8" cy="11.25" r="0.9" fill="currentColor"></circle>
+    </svg>
+    <span data-error-text></span>
+  </p>
+  <slot />
+</div>

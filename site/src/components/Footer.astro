@@ -1,0 +1,117 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <p class="site-footer__name">Revive Healthcare Providers</p>
+      <p>Cleveland, Ohio</p>
+      <p class="site-footer__copy">© {year}. All rights reserved.</p>
+    </div>
+
+    <div class="site-footer__legal">
+      <nav aria-label="Legal">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+      </nav>
+      <p class="site-footer__disclaimer">
+        If you are experiencing a medical emergency, call 911. Information on this site is not medical advice.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 36px;
+    padding-bottom: 44px;
+    font-size: var(--fs-2);
+    color: var(--ink-muted);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .site-footer__name {
+    font-family: var(--font-display);
+    font-size: var(--fs-3);
+    line-height: 28px;
+    color: var(--ink);
+  }
+
+  .site-footer__copy {
+    margin-top: 4px;
+    font-size: var(--fs-1);
+    color: var(--ink-subtle);
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule-footer);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .site-footer__disclaimer {
+    font-size: var(--fs-1);
+    line-height: 1.55;
+    color: var(--ink-subtle);
+  }
+
+  @media (min-width: 720px) {
+    .site-footer__inner {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 24px 48px;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 48px;
+      padding-bottom: 64px;
+    }
+
+    .site-footer__brand {
+      gap: 6px;
+    }
+
+    .site-footer__copy {
+      margin-top: 6px;
+    }
+
+    .site-footer__legal {
+      max-width: 460px;
+      gap: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    nav {
+      gap: 0 28px;
+    }
+
+    /* Text sits on the same 28px line as the company name, so their tops align. */
+    nav a {
+      align-items: flex-start;
+      line-height: 28px;
+    }
+  }
+</style>

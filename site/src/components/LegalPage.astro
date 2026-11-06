@@ -1,0 +1,63 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<article class="container legal">
+  <h1>{title}</h1>
+  <slot />
+</article>
+
+<style>
+  .legal {
+    max-width: calc(var(--max-w-join) + 2 * var(--gutter));
+    padding-top: 44px;
+    padding-bottom: 72px;
+  }
+
+  h1 {
+    margin-bottom: 24px;
+    font-family: var(--font-display);
+    font-size: var(--fs-5);
+    line-height: 1.05;
+  }
+
+  .legal :global(h2) {
+    margin: 36px 0 10px;
+    font-family: var(--font-display);
+    font-size: var(--fs-4);
+    line-height: 1.2;
+  }
+
+  .legal :global(p),
+  .legal :global(li) {
+    font-size: var(--fs-2);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .legal :global(p + p) {
+    margin-top: 12px;
+  }
+
+  .legal :global(.todo) {
+    padding: 16px;
+    border-radius: var(--radius-input);
+    background: var(--stone);
+    color: var(--ink);
+  }
+
+  @media (min-width: 720px) {
+    .legal {
+      padding-top: 64px;
+      padding-bottom: 104px;
+    }
+
+    h1 {
+      font-size: var(--fs-6);
+    }
+  }
+</style>

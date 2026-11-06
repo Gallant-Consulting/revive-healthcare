@@ -1,0 +1,517 @@
+---
+import Field from './Field.astro';
+
+const plans = [
+  {
+    id: 'individual',
+    label: 'For myself',
+    price: '$150',
+    perMonth: true,
+    title: 'Individual adult membership',
+    description:
+      'Comprehensive internal medicine care, diagnostic oversight, and around-the-clock coordination.',
+  },
+  {
+    id: 'employer',
+    label: 'For my employees',
+    price: 'Custom',
+    perMonth: false,
+    title: 'Corporate & employer packages',
+    description: 'Tiered health programs designed to support employee wellness and reduce downtime.',
+  },
+];
+
+const employeeOptions = [
+  { value: '1-10', label: '1–10' },
+  { value: '11-50', label: '11–50' },
+  { value: '51-200', label: '51–200' },
+  { value: '200+', label: '200+' },
+];
+---
+
+<section id="join" class="join" aria-labelledby="join-title" data-waitlist>
+  <div class="join__inner">
+    <div class="join__head">
+      <h2 id="join-title">Save your place.</h2>
+      <p class="join__lede">
+        We keep our patient panel small so your doctor always has time for you. Choose a membership, join the
+        waitlist, and we'll reach out personally when enrollment opens.
+      </p>
+    </div>
+
+    <div class="plans" role="group" aria-label="Choose a membership">
+      {
+        plans.map((plan) => (
+          <button
+            type="button"
+            class="plan"
+            data-plan={plan.id}
+            aria-pressed={plan.id === 'individual' ? 'true' : 'false'}
+          >
+            <span class="plan__top">
+              <span class="plan__label">{plan.label}</span>
+              <span class="plan__dot" aria-hidden="true" />
+            </span>
+            <span class="plan__price">
+              {plan.price}
+              {plan.perMonth && <span class="plan__per">{' /month'}</span>}
+            </span>
+            <span class="plan__title">{plan.title}</span>
+            <span class="plan__desc">{plan.description}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="form-card">
+      <div data-form-view>
+        <!-- method="post" so that, without JavaScript, entries never end up in the URL. -->
+        <form class="form" aria-label="Waitlist sign-up" method="post" data-waitlist-form>
+          <p class="form__status" aria-live="polite">
+            Joining the waitlist for: <strong data-plan-label>Individual membership</strong>
+          </p>
+
+          <div class="form__row">
+            <Field name="firstName" label="First name" autocomplete="given-name" maxlength={80} required />
+            <Field name="lastName" label="Last name" autocomplete="family-name" maxlength={80} required />
+          </div>
+
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            autocomplete="email"
+            spellcheck="false"
+            autocapitalize="off"
+            maxlength={254}
+            describedBy="waitlist-email-suggestion"
+            required
+          >
+            <!-- Filled by the form script with a typo fix, e.g. "Did you mean name@gmail.com?" -->
+            <p class="field__suggestion" id="waitlist-email-suggestion" aria-live="polite" data-email-suggestion></p>
+          </Field>
+
+          <div class="form__row">
+            <Field name="phone" label="Mobile phone" type="tel" autocomplete="tel" maxlength={20} required />
+            <Field
+              name="zip"
+              label="ZIP code"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              pattern="[0-9]{5}"
+              maxlength={5}
+              required
+            />
+          </div>
+
+          <div class="form__employer" role="group" aria-label="Company details" data-employer-fields hidden>
+            <Field name="company" label="Company name" autocomplete="organization" maxlength={120} required />
+            <Field name="employeeCount" label="Number of employees" options={employeeOptions} required />
+          </div>
+
+          <Field name="referral" label="How did you hear about us?" hint="Optional" autocomplete="off" maxlength={200} />
+
+          <div class="field" data-field="consent">
+            <div class="consent">
+              <input
+                type="checkbox"
+                id="waitlist-consent"
+                name="consent"
+                aria-describedby="waitlist-consent-error"
+                required
+              />
+              <label for="waitlist-consent">
+                I agree to be contacted by Revive Healthcare by email and text about membership. Message and data
+                rates may apply; reply STOP to opt out. Please don't include medical information here.
+              </label>
+            </div>
+            <p class="field__error" id="waitlist-consent-error" hidden>
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+                <path d="M8 4.5v4.25" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+                <circle cx="8" cy="11.25" r="0.9" fill="currentColor"></circle>
+              </svg>
+              <span data-error-text></span>
+            </p>
+          </div>
+
+          <!-- Honeypot: hidden from people; bots that fill it in are silently dropped. -->
+          <div class="hp" aria-hidden="true">
+            <label for="waitlist-website">Leave this field empty</label>
+            <input type="text" id="waitlist-website" name="website" tabindex="-1" autocomplete="off" data-honeypot />
+          </div>
+
+          <div class="form__submit-group">
+            <div class="form__alert" role="alert" data-submit-error></div>
+            <button type="submit" class="btn btn-primary form__submit" data-submit>Join the waitlist</button>
+          </div>
+
+          <p class="form__note">
+            We never sell or share your information. <a href="/privacy">Privacy Policy</a>
+          </p>
+
+          <noscript>
+            <p class="form__noscript">Please turn on JavaScript to join the waitlist.</p>
+          </noscript>
+        </form>
+      </div>
+
+      <div class="success" data-success-view hidden>
+        <h3 tabindex="-1" data-success-heading>Your place is saved.</h3>
+        <p>
+          Thank you. A confirmation is on its way to your inbox, and our office will reach out personally before
+          enrollment opens.
+        </p>
+        <button type="button" class="btn btn-outline" data-add-another>Add another person</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initWaitlistForm } from '../scripts/waitlist-form';
+
+  document.querySelectorAll<HTMLElement>('[data-waitlist]').forEach(initWaitlistForm);
+</script>
+
+<style>
+  .join {
+    background: var(--teal-mid);
+    color: var(--white);
+  }
+
+  .join__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: calc(var(--max-w-join) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding: 56px var(--gutter);
+  }
+
+  .join__head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    text-align: center;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-5);
+    line-height: 1.05;
+  }
+
+  .join__lede {
+    max-width: 600px;
+    font-size: var(--fs-2);
+    line-height: 1.6;
+    color: var(--mint-text);
+  }
+
+  /* Membership selector */
+  .plans {
+    display: grid;
+    gap: 12px;
+  }
+
+  .plan {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 22px;
+    border: 2px solid var(--teal-line);
+    border-radius: 18px;
+    background: var(--teal-dark);
+    color: var(--white);
+    text-align: left;
+    line-height: normal;
+    cursor: pointer;
+  }
+
+  .plan:hover {
+    border-color: var(--white);
+  }
+
+  .plan[aria-pressed='true'] {
+    border-color: var(--white);
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  /* teal-deep doesn't show against teal-mid, so the ring is white here. */
+  .plan:focus-visible {
+    outline-color: var(--white);
+  }
+
+  .plan__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .plan__label {
+    font-size: var(--fs-1);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .plan__dot {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--ring-unselected);
+    border-radius: 999px;
+  }
+
+  .plan[aria-pressed='true'] .plan__dot {
+    border: 7px solid var(--teal-deep);
+    background: var(--white);
+  }
+
+  .plan__price {
+    font-family: var(--font-display);
+    font-size: var(--fs-5);
+    line-height: 1;
+  }
+
+  .plan__per {
+    font-family: var(--font-body);
+    font-size: var(--fs-2);
+    opacity: 0.8;
+  }
+
+  .plan__title {
+    font-size: var(--fs-2);
+    font-weight: 600;
+  }
+
+  .plan__desc {
+    font-size: var(--fs-2);
+    line-height: 1.55;
+    opacity: 0.95;
+  }
+
+  /* Form card */
+  .form-card {
+    padding: 24px;
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  [data-form-view][hidden] {
+    display: none;
+  }
+
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .form__status {
+    font-size: var(--fs-2);
+    color: var(--ink-muted);
+  }
+
+  .form__status strong {
+    font-weight: 600;
+    color: var(--teal-deep);
+  }
+
+  .form__row {
+    display: grid;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .form__employer {
+    display: grid;
+    gap: 16px;
+    align-items: start;
+    padding: 16px;
+    border-radius: var(--radius-tint);
+    background: var(--panel-tint);
+  }
+
+  .form__employer[hidden] {
+    display: none;
+  }
+
+  .consent {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: var(--fs-2);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .consent input {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    accent-color: var(--teal-deep);
+    cursor: pointer;
+  }
+
+  .consent label {
+    cursor: pointer;
+  }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form__submit-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form__submit {
+    width: 100%;
+    min-height: 56px;
+    font-size: var(--fs-2);
+  }
+
+  .form__note {
+    font-size: var(--fs-1);
+    color: var(--ink-subtle);
+    text-align: center;
+  }
+
+  .form__noscript {
+    font-size: var(--fs-2);
+    font-weight: 600;
+    color: var(--error);
+  }
+
+  /* Success state */
+  .success {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 12px 0;
+  }
+
+  .success[hidden] {
+    display: none;
+  }
+
+  .success h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-4);
+    line-height: 1.1;
+  }
+
+  .success p {
+    font-size: var(--fs-2);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .success .btn {
+    align-self: flex-start;
+  }
+
+  @media (min-width: 720px) {
+    .join__inner {
+      gap: 36px;
+      padding-block: 104px;
+    }
+
+    .join__head {
+      gap: 18px;
+    }
+
+    h2 {
+      font-size: var(--fs-6);
+    }
+
+    .join__lede {
+      font-size: var(--fs-3);
+    }
+
+    .plans {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .plan {
+      gap: 12px;
+      padding: 28px;
+      border-radius: var(--radius-panel);
+    }
+
+    .plan__price {
+      font-size: var(--fs-6);
+    }
+
+    .form-card {
+      padding: 40px;
+    }
+
+    .form {
+      gap: 20px;
+    }
+
+    .form__row,
+    .form__employer {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .consent input {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+    }
+
+    .form__submit {
+      min-height: 54px;
+    }
+
+    .form__note {
+      text-align: left;
+    }
+
+    .success {
+      padding: 24px 0;
+    }
+
+    .success h3 {
+      font-size: var(--fs-5);
+    }
+  }
+</style>
+
+<style is:global>
+  /* Rendered by the form script, so it can't use scoped styles. */
+  .form__alert:not(:empty) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid var(--error);
+    border-radius: var(--radius-input);
+    background: var(--error-tint);
+    font-size: var(--fs-2);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+</style>

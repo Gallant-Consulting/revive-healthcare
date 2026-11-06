@@ -1,0 +1,140 @@
+<section class="container hero" aria-labelledby="hero-title">
+  <div class="hero__copy">
+    <h1 id="hero-title">No waiting room. <span class="hero__accent">Your doctor is ready.</span></h1>
+    <p class="hero__lede">
+      Revive is a Direct Primary Care practice: one simple membership that skips the insurance maze and the
+      line. Your physician knows you, your care team answers when you reach out, and every visit gets the
+      time it deserves.
+    </p>
+  </div>
+
+  <figure class="chat" aria-label="Example of texting your doctor">
+    <p class="chat__time">Tuesday, 9:12 AM</p>
+    <p class="bubble bubble--patient">Woke up with a sore throat and fever. Any chance I can come in?</p>
+    <p class="bubble bubble--team">
+      Of course. We have 11:30 open today, see you then. Text us if anything changes before.
+    </p>
+  </figure>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 36px;
+    padding-top: 44px;
+    padding-bottom: 56px;
+  }
+
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-6);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+  }
+
+  .hero__accent {
+    color: var(--teal-mid);
+  }
+
+  .hero__lede {
+    max-width: 540px;
+    font-size: var(--fs-2);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px;
+    border-radius: var(--radius-panel);
+    background: var(--stone);
+  }
+
+  .chat__time {
+    font-size: var(--fs-1);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-subtle);
+  }
+
+  .bubble {
+    /* As on the canvas, max-width limits the text box; padding sits outside it. */
+    box-sizing: content-box;
+    max-width: 86%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: var(--fs-2);
+    line-height: 1.5;
+  }
+
+  .bubble--patient {
+    align-self: flex-end;
+    border-bottom-right-radius: 6px;
+    background: var(--white);
+  }
+
+  .bubble--team {
+    align-self: flex-start;
+    border-bottom-left-radius: 6px;
+    background: var(--teal-mid);
+    color: var(--white);
+  }
+
+  @media (min-width: 720px) {
+    .hero {
+      gap: 64px;
+      padding-top: 64px;
+      padding-bottom: 104px;
+    }
+
+    .hero__copy {
+      gap: 28px;
+    }
+
+    h1 {
+      font-size: var(--fs-7);
+      line-height: 1.02;
+    }
+
+    .hero__lede {
+      font-size: var(--fs-3);
+    }
+
+    .chat {
+      gap: 14px;
+      padding: 36px;
+      border-radius: var(--radius-hero-card);
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: 14px 18px;
+      border-radius: 20px;
+    }
+
+    .bubble--patient {
+      border-bottom-right-radius: 6px;
+    }
+
+    .bubble--team {
+      border-bottom-left-radius: 6px;
+    }
+  }
+
+  /* Two columns once each has room for "No waiting room." on one line at 56px. */
+  @media (min-width: 960px) {
+    .hero {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+  }
+</style>

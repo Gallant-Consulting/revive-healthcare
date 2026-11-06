@@ -1,0 +1,85 @@
+---
+const onHome = Astro.url.pathname === '/';
+const joinHref = onHome ? '#join' : '/#join';
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="/">Revive Healthcare</a>
+    <a class="btn btn-primary site-header__cta" href={joinHref}>
+      <!-- One wrapping span: inline-flex would drop the spaces between bare text runs. -->
+      <span>Join <span class="desktop-only">the </span>waitlist</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--cream);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 16px;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--fs-4);
+    line-height: 1;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .wordmark:hover {
+    color: var(--ink);
+  }
+
+  .site-header__cta {
+    padding: 0 16px;
+    font-size: var(--fs-2);
+    white-space: nowrap;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  /* Keeps the wordmark and button on one line at 360px. */
+  @media (max-width: 379px) {
+    .site-header__cta {
+      padding: 0 14px;
+    }
+  }
+
+  @media (min-width: 720px) {
+    .site-header {
+      border-bottom: 0;
+    }
+
+    .site-header__inner {
+      gap: 16px;
+      padding-block: 28px;
+    }
+
+    .wordmark {
+      letter-spacing: 0.01em;
+    }
+
+    .site-header__cta {
+      padding: 0 22px;
+    }
+
+    .desktop-only {
+      display: inline;
+    }
+  }
+</style>

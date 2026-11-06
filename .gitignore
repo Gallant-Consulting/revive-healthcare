@@ -1,0 +1,10 @@
+# Design and source material: kept locally, not in the repo
+design-reference/
+reference/
+Claude outputs/
+
+# Local Claude Code settings (the shared launch.json is committed)
+.claude/settings.local.json
+
+# OS files
+.DS_Store

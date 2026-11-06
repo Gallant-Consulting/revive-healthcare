@@ -1,0 +1,205 @@
+---
+const cards = [
+  {
+    title: 'Same-day or next-day visits',
+    body: 'Urgent needs are triaged right away and seen in a calm, unhurried clinic.',
+  },
+  {
+    title: 'Your medical team, 24/7',
+    body: 'Secure call, text, or email with the care team who knows your history.',
+  },
+  {
+    title: 'Unlimited, unhurried time',
+    body: 'As many visits as you need, no co-pays, no stopwatch — every concern fully heard.',
+  },
+];
+
+const extras = [
+  {
+    title: 'Faster access to specialists',
+    body: 'Streamlined coordination and scheduling help whenever you need specialized care.',
+  },
+  {
+    title: 'ED & hospital coordination',
+    body: 'Your doctor works alongside emergency and hospital teams when the unexpected happens.',
+  },
+];
+---
+
+<section class="benefits" aria-labelledby="benefits-title">
+  <div class="container benefits__inner">
+    <div class="benefits__head">
+      <h2 id="benefits-title">Care that feels made for you.</h2>
+      <p>One flat monthly fee covers the relationship. You pay your doctor directly, not an insurer.</p>
+    </div>
+
+    <ul class="cards" role="list">
+      {
+        cards.map((card) => (
+          <li class="card">
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <ul class="extras" role="list">
+      {
+        extras.map((item) => (
+          <li class="extra">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a class="btn btn-primary benefits__cta" href="#join">Reserve your spot</a>
+  </div>
+</section>
+
+<style>
+  .benefits {
+    border-block: 1px solid var(--rule);
+    background: var(--white);
+  }
+
+  .benefits__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-block: 56px;
+  }
+
+  .benefits__head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  h2 {
+    max-width: 760px;
+    font-family: var(--font-display);
+    font-size: var(--fs-5);
+    line-height: 1.1;
+  }
+
+  .benefits__head p {
+    max-width: 640px;
+    font-size: var(--fs-2);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .cards,
+  .extras {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cards {
+    gap: 12px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px;
+    border-radius: var(--radius-card);
+    background: var(--cream);
+  }
+
+  .card h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-4);
+    line-height: 1.2;
+  }
+
+  .card p,
+  .extra p {
+    font-size: var(--fs-2);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .extras {
+    gap: 20px;
+  }
+
+  .extra {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .extra h3 {
+    font-size: var(--fs-3);
+    font-weight: 600;
+  }
+
+  .benefits__cta {
+    min-height: 54px;
+    font-size: var(--fs-2);
+  }
+
+  @media (min-width: 720px) {
+    .benefits__inner {
+      gap: 48px;
+      padding-block: 96px;
+    }
+
+    .benefits__head {
+      gap: 14px;
+    }
+
+    h2 {
+      font-size: var(--fs-6);
+    }
+
+    .benefits__head p {
+      font-size: var(--fs-3);
+    }
+
+    .cards {
+      gap: 20px;
+    }
+
+    .card {
+      gap: 14px;
+      padding: 30px;
+    }
+
+    .card p,
+    .extra p {
+      line-height: 1.6;
+    }
+
+    .extras {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 40px;
+    }
+
+    .extra {
+      gap: 8px;
+      padding-top: 20px;
+    }
+
+    .benefits__cta {
+      align-self: flex-start;
+      min-height: 52px;
+      padding: 0 28px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
