@@ -146,7 +146,7 @@ The design files won in every case:
 
 1. **Text-card `aria-label`:** "Example of texting your doctor" (files). The prompt said "…your care team".
 2. **Mobile hero card:** 20px corner radius, with 18px bubbles and a 6px tail (files). The prompt gave 24px and 20px for all sizes. Desktop uses 24px and 20px.
-3. **Benefit card titles:** 24px on mobile and 27px on desktop (files). The prompt said 27px. Both now use the type scale below (24px).
+3. **Benefit card titles:** 24px on mobile and 27px on desktop (files). The prompt said 27px. Both now use the type scale below (20px).
 4. **Success state:** includes a button below the message (files). The prompt didn't mention it. The files label it "Back to form"; the build says "Add another person", which says what it does.
 5. **Mobile only:** a bottom border on the header and a divider above the footer's legal links (files).
 6. **Values used in the files but missing from the token list:**
@@ -159,21 +159,19 @@ The design files won in every case:
 
 ### Type scale (differs from the canvas)
 
-The canvas used 13–14 font sizes at each screen size, many only 1–2px apart, and display sizes up to 78px. The build uses one 7-step scale instead, defined as tokens in `src/styles/tokens.css` (`--fs-1` to `--fs-7`). Every `font-size` in the site uses one of these tokens, and each step is at least 3px from the next. Sizes are fixed per breakpoint, with no fluid `clamp()` in between.
+The canvas used 13–14 font sizes at each screen size, many only 1–2px apart, and display sizes up to 78px. The build uses one 5-step scale instead, defined as tokens in `src/styles/tokens.css` (`--fs-1` to `--fs-5`). Every `font-size` in the site uses one of these tokens. The page is mostly text, so the scale is kept short: one size for body text, one for small print, and three heading sizes that are clearly different from each other. Sizes are fixed per breakpoint, with no fluid `clamp()` in between. A desktop page shows at most five sizes, and a phone four.
 
 | Token | Size | Desktop | Mobile |
 |---|---|---|---|
 | `--fs-1` | 13px | Small print, eyebrow labels | Same |
 | `--fs-2` | 16px | Body, form and button text, bubbles, card text | Same, plus intro paragraphs |
-| `--fs-3` | 20px | Intro paragraphs, small headings, footer name | Small headings, footer name |
-| `--fs-4` | 24px | Card titles, wordmark, legal section headings | Same, plus "Your place is saved." |
-| `--fs-5` | 32px | "Your place is saved." | Section headings, prices, legal H1 |
-| `--fs-6` | 40px | Section headings, prices, legal H1 | H1 |
-| `--fs-7` | 56px | H1 | Not used |
+| `--fs-3` | 20px | Intro paragraphs, card titles, legal section headings, footer name | Same, minus intro paragraphs, plus the wordmark |
+| `--fs-4` | 32px | Section headings, prices, legal H1, "Your place is saved.", wordmark | Same, minus the wordmark, plus the H1 |
+| `--fs-5` | 48px | H1 | Not used |
 
 For comparison, the canvas had an H1 of 78 / 46 (desktop / mobile), section headings of 50–62 / 34–40, and prices of 52 / 42. GAL-301 still says "up to 78px desktop" and needs updating to match.
 
-The hero switches to two columns at 960px (the canvas switched at about 750px), so "No waiting room." stays on one line at 56px.
+The hero switches to two columns at 960px (the canvas switched at about 750px), so "No waiting room." stays on one line at 48px.
 
 ### Where the build departs from the files, for accessibility
 

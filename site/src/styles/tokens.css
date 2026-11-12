@@ -40,14 +40,12 @@
   --font-display: var(--font-newsreader);
   --font-body: var(--font-inter-tight);
 
-  /* Type scale. Use only these sizes; each step is at least 3px from the next. */
-  --fs-1: 13px; /* small print, eyebrow labels */
+  /* Type scale. Use only these sizes; each step is clearly larger than the last. */
+  --fs-1: 13px; /* small print, labels */
   --fs-2: 16px; /* body, form and button text */
-  --fs-3: 20px; /* intro paragraphs (desktop), small headings */
-  --fs-4: 24px; /* card titles, wordmark */
-  --fs-5: 32px; /* section headings (mobile), panel headings */
-  --fs-6: 40px; /* section headings (desktop), H1 (mobile), prices */
-  --fs-7: 56px; /* H1 (desktop) */
+  --fs-3: 20px; /* intro paragraphs, card titles, small headings, wordmark (mobile) */
+  --fs-4: 32px; /* section headings, prices, wordmark (desktop), H1 (mobile) */
+  --fs-5: 48px; /* H1 (desktop) */
 
   /* Layout */
   --max-w: 1200px;

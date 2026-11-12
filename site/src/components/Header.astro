@@ -58,7 +58,7 @@ const joinHref = onHome ? '#join' : '/#join';
     margin-block: -10px;
     padding-block: 10px;
     font-family: var(--font-display);
-    font-size: var(--fs-4);
+    font-size: var(--fs-3);
     line-height: 1.05;
     color: var(--ink);
     text-decoration: none;
@@ -124,12 +124,8 @@ const joinHref = onHome ? '#join' : '/#join';
     }
   }
 
-  /* At 360px the name drops a size so the block still fits beside the button. */
+  /* A little more room for the name at 360px. */
   @media (max-width: 379px) {
-    .brand__name {
-      font-size: var(--fs-3);
-    }
-
     .site-header__cta {
       padding: 0 14px;
     }
@@ -150,7 +146,7 @@ const joinHref = onHome ? '#join' : '/#join';
     }
 
     .brand__name {
-      font-size: var(--fs-5);
+      font-size: var(--fs-4);
       line-height: 1;
       letter-spacing: 0.01em;
     }
