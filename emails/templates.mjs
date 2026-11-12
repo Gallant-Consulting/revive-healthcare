@@ -148,12 +148,12 @@ const patientFooter =
   `<p style="margin:0 0 4px;font-family:${serif};font-size:18px;line-height:1.4;color:${c.ink};">Revive Healthcare Providers</p>` +
   `<p style="margin:0 0 14px;">Cleveland, Ohio</p>` +
   `<p style="margin:0 0 10px;">If you are experiencing a medical emergency, call 911. Please don't send medical information by email.</p>` +
-  `<p style="margin:0;">You're receiving this because you joined the waitlist at ${link(SITE_URL, 'rhcproviders.com')}. ${link(`${SITE_URL}/privacy`, 'Privacy Policy')}</p>`;
+  `<p style="margin:0;">You're receiving this because you joined the waitlist at ${link(SITE_URL, 'rhcproviders.com')}. ${link(`${SITE_URL}/privacy`, 'Privacy Statement')}</p>`;
 
 const patientFooterText =
   'Revive Healthcare Providers\nCleveland, Ohio\n\n' +
   "If you are experiencing a medical emergency, call 911. Please don't send medical information by email.\n\n" +
-  `You're receiving this because you joined the waitlist at rhcproviders.com. Privacy Policy: ${SITE_URL}/privacy`;
+  `You're receiving this because you joined the waitlist at rhcproviders.com. Privacy Statement: ${SITE_URL}/privacy`;
 
 // ---- The three emails ----
 

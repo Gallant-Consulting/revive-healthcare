@@ -1,13 +1,22 @@
 ---
 interface Props {
   title: string;
+  /** ISO date, e.g. "2026-11-10". */
+  effectiveDate: string;
 }
 
-const { title } = Astro.props;
+const { title, effectiveDate } = Astro.props;
+const effectiveLabel = new Date(`${effectiveDate}T12:00:00Z`).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
 ---
 
 <article class="container legal">
   <h1>{title}</h1>
+  <p class="legal__effective">Effective Date: <time datetime={effectiveDate}>{effectiveLabel}</time></p>
   <slot />
 </article>
 
@@ -19,14 +28,19 @@ const { title } = Astro.props;
   }
 
   h1 {
-    margin-bottom: 24px;
+    margin-bottom: 8px;
     font-family: var(--font-display);
     font-size: var(--fs-5);
     line-height: 1.05;
   }
 
+  .legal__effective {
+    margin-bottom: 32px;
+    color: var(--ink-subtle);
+  }
+
   .legal :global(h2) {
-    margin: 36px 0 10px;
+    margin: 40px 0 12px;
     font-family: var(--font-display);
     font-size: var(--fs-4);
     line-height: 1.2;
@@ -39,14 +53,25 @@ const { title } = Astro.props;
     color: var(--ink-muted);
   }
 
-  .legal :global(p + p) {
+  .legal :global(ul) {
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .legal :global(li + li) {
+    margin-top: 8px;
+  }
+
+  .legal :global(li::marker) {
+    color: var(--ink-subtle);
+  }
+
+  .legal :global(:is(p, ul) + :is(p, ul)) {
     margin-top: 12px;
   }
 
-  .legal :global(.todo) {
-    padding: 16px;
-    border-radius: var(--radius-input);
-    background: var(--stone);
+  .legal :global(strong) {
+    font-weight: 600;
     color: var(--ink);
   }
 

@@ -46,7 +46,7 @@ Any static host works. Use these settings:
 
 Pages are built as `/privacy/index.html` and `/terms/index.html`, so `/privacy` and `/terms` work on every common host (Netlify, Cloudflare Pages, Vercel, S3 + CloudFront, GitHub Pages).
 
-For a staging URL, put it behind the host's password protection or send an `X-Robots-Tag: noindex` header, so placeholder legal text doesn't get indexed.
+For a staging URL, put it behind the host's password protection or send an `X-Robots-Tag: noindex` header, so it doesn't get indexed.
 
 ## The waitlist form
 
@@ -180,8 +180,7 @@ The hero switches to two columns at 960px (the canvas switched at about 750px), 
 ## TODO checklist
 
 - [ ] **Form backend:** choose it and set `PUBLIC_FORM_ENDPOINT` (GAL-311).
-- [ ] **Privacy Policy:** replace the placeholder outline in `src/pages/privacy.astro` with counsel-approved text.
-- [ ] **Terms of Service:** replace the placeholder outline in `src/pages/terms.astro` with counsel-approved text.
+- [x] **Privacy Statement and Terms of Service:** final text in `src/pages/privacy.astro` and `src/pages/terms.astro` (effective November 10, 2026). Update the `effectiveDate` on each page whenever the text changes.
 - [ ] **Link preview image:** replace the `public/og.png` placeholder with a 1200×630 image (GAL-305).
 - [ ] **Favicon:** replace the `public/favicon.svg` placeholder (GAL-305).
 - [ ] **Form states:** apply the GAL-303 designs. Update `--error` and `--error-tint` in `tokens.css`, and the copy in `src/scripts/waitlist-form.ts`.
