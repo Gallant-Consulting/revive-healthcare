@@ -5,16 +5,17 @@ const joinHref = onHome ? '#join' : '/#join';
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="wordmark" href="/">
-      <span class="wordmark__text">Revive Healthcare <span class="wordmark__last">Providers</span></span>
-      <!-- A flat line under the name that turns into a heartbeat just past its end. -->
-      <span class="wordmark__rule" aria-hidden="true">
-        <span class="wordmark__line"></span>
-        <svg class="wordmark__beat" viewBox="0 22 100 88" focusable="false">
+    <div class="brand">
+      <a class="brand__name" href="/">Revive Healthcare <span class="brand__break">Providers</span></a>
+      <p class="brand__tagline">Reimagining Medicine. <span class="brand__break">Reviving Care.</span></p>
+      <!-- A flat line under the name and tagline that turns into a heartbeat just past their end. -->
+      <span class="brand__rule" aria-hidden="true">
+        <span class="brand__line"></span>
+        <svg class="brand__beat" viewBox="0 22 100 88" focusable="false">
           <path d="M0 66H10L19 47L29 85L40 27L50 105L60 56L70 72L78 66H100" vector-effect="non-scaling-stroke"></path>
         </svg>
       </span>
-    </a>
+    </div>
     <a class="btn btn-primary site-header__cta" href={joinHref}>
       <!-- One wrapping span: inline-flex would drop the spaces between bare text runs. -->
       <span>Join <span class="desktop-only">the </span>waitlist</span>
@@ -36,54 +37,67 @@ const joinHref = onHome ? '#join' : '/#join';
     padding-block: 16px;
   }
 
-  .wordmark {
+  .brand {
     /* The heartbeat keeps the trace's 100:88 shape. */
     --beat-height: 24px;
     --beat-width: calc(var(--beat-height) * 100 / 88);
 
     display: inline-flex;
     flex-direction: column;
-    justify-content: center;
     min-width: 0;
-    min-height: 44px;
+  }
+
+  /* Room at the end of the text, so the heartbeat sits just after it. */
+  .brand__name,
+  .brand__tagline {
+    padding-right: var(--beat-width);
+  }
+
+  .brand__name {
+    /* Taller hit area (44px or more) without changing the layout. */
+    margin-block: -10px;
+    padding-block: 10px;
     font-family: var(--font-display);
-    font-size: var(--fs-3);
-    line-height: 1.1;
+    font-size: var(--fs-4);
+    line-height: 1.05;
     color: var(--ink);
     text-decoration: none;
   }
 
-  .wordmark:hover {
+  .brand__name:hover {
     color: var(--ink);
   }
 
-  /* Room at the end of the name, so the heartbeat sits just after it. */
-  .wordmark__text {
-    padding-right: var(--beat-width);
+  .brand__tagline {
+    margin-top: 6px;
+    font-size: var(--fs-1);
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--ink-muted);
   }
 
-  .wordmark__rule {
+  .brand__rule {
     display: flex;
     align-items: center;
     height: 2px;
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
-  .wordmark__line {
+  .brand__line {
     flex: 1;
     height: 2px;
     border-radius: 1px;
     background: var(--pulse-red);
   }
 
-  .wordmark__beat {
+  .brand__beat {
     flex: none;
     width: var(--beat-width);
     height: var(--beat-height);
     overflow: visible;
   }
 
-  .wordmark__beat path {
+  .brand__beat path {
     fill: none;
     stroke: var(--pulse-red);
     stroke-width: 2px;
@@ -102,16 +116,20 @@ const joinHref = onHome ? '#join' : '/#join';
     display: none;
   }
 
-  /* Too narrow for the name on one line: break before "Providers" so the wordmark is only
-     as wide as "Revive Healthcare", and the heartbeat sits right after the text. */
-  @media (max-width: 469px) {
-    .wordmark__last {
+  /* Too narrow for one-line name and tagline beside the button: break each in two
+     ("Revive Healthcare / Providers", "Reimagining Medicine. / Reviving Care."). */
+  @media (max-width: 499px) {
+    .brand__break {
       display: block;
     }
   }
 
-  /* Leaves the wordmark as much room as possible at 360px. */
+  /* At 360px the name drops a size so the block still fits beside the button. */
   @media (max-width: 379px) {
+    .brand__name {
+      font-size: var(--fs-3);
+    }
+
     .site-header__cta {
       padding: 0 14px;
     }
@@ -127,12 +145,23 @@ const joinHref = onHome ? '#join' : '/#join';
       padding-block: 28px;
     }
 
-    .wordmark {
-      --beat-height: 30px;
+    .brand {
+      --beat-height: 32px;
+    }
 
-      font-size: var(--fs-4);
+    .brand__name {
+      font-size: var(--fs-5);
       line-height: 1;
       letter-spacing: 0.01em;
+    }
+
+    .brand__tagline {
+      margin-top: 8px;
+      font-size: var(--fs-2);
+    }
+
+    .brand__rule {
+      margin-top: 12px;
     }
 
     .site-header__cta {
