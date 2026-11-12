@@ -2,9 +2,9 @@
 import { defineConfig, envField, fontProviders } from 'astro/config';
 
 export default defineConfig({
-  // Absolute site URL, used for canonical and Open Graph URLs. Set SITE_URL in the
-  // host's build settings (e.g. https://staging.revivehealthcare.com).
-  site: process.env.SITE_URL || undefined,
+  // Absolute site URL, used for canonical and Open Graph URLs (link previews need an
+  // absolute image URL). Set SITE_URL in the host's build settings to override it.
+  site: process.env.SITE_URL || 'https://www.rhcproviders.com',
   output: 'static',
   build: {
     // One small page: inlining the CSS saves a render-blocking request on mobile.

@@ -26,7 +26,7 @@ All of these are read **at build time** and baked into the static files, so a ch
 | `PUBLIC_FORM_ENDPOINT` | For production | URL the waitlist form POSTs JSON to. If unset, `npm run dev` simulates a successful submission and a production build shows the form's error message. Must be a full URL. |
 | `PUBLIC_UNSUBSCRIBE_ENDPOINT` | For production | URL the `/unsubscribe` page POSTs `{ id }` to: the n8n workflow "Revive Healthcare: email unsubscribe", at `https://n8n.workgallantly.com/webhook/revive-unsubscribe`. If unset, the page shows an error and points people to office@rhcproviders.com. |
 | `PUBLIC_ANALYTICS_SRC` | No | URL of a **cookieless** analytics script (e.g. Plausible, Fathom). Adds one `<script defer>` tag when set; adds nothing when empty. Never put ad or social tracking pixels here. |
-| `SITE_URL` | Recommended | The site's absolute URL, e.g. `https://staging.example.com`. Used for the canonical link and to make `og:image` absolute, which link previews need. Set it in the host's build settings or the shell. It isn't read from `.env`. |
+| `SITE_URL` | No | The site's absolute URL. Defaults to `https://www.rhcproviders.com`. Used for the canonical link and the absolute `og:image` URL that link previews need. Set it in the host's build settings or the shell to override (it isn't read from `.env`). |
 
 ## Build and preview
 
@@ -132,7 +132,8 @@ src/
   lib/submit-waitlist.ts      the one module that talks to the backend
   lib/unsubscribe.ts          posts unsubscribe requests (see Unsubscribing)
   pages/                      index, privacy, terms
-public/                       favicon.svg, og.png (both placeholders)
+public/                       favicon.svg (placeholder), og.png (link preview image)
+og-image/og-image.html        source for public/og.png, with the command to re-render it
 ```
 
 **Fonts:** Newsreader 400 and Inter Tight 400–600 come from Google Fonts through Astro's Fonts API. They're downloaded at build time and served from this site, so visitors' browsers never contact Google. Both are preloaded, use `font-display: swap`, and have size-matched fallbacks, so the page doesn't shift when they load. The build needs network access to fetch them.
@@ -191,9 +192,8 @@ The hero switches to two columns at 960px (the canvas switched at about 750px), 
 
 - [ ] **Form backend:** choose it and set `PUBLIC_FORM_ENDPOINT` (GAL-311).
 - [x] **Privacy Statement and Terms of Service:** final text in `src/pages/privacy.astro` and `src/pages/terms.astro` (effective November 10, 2026). Update the `effectiveDate` on each page whenever the text changes.
-- [ ] **Link preview image:** replace the `public/og.png` placeholder with a 1200×630 image (GAL-305).
+- [x] **Link preview image:** `public/og.png` (1200×630), rendered from `og-image/og-image.html`.
 - [ ] **Favicon:** replace the `public/favicon.svg` placeholder (GAL-305).
 - [ ] **Form states:** apply the GAL-303 designs. Update `--error` and `--error-tint` in `tokens.css`, and the copy in `src/scripts/waitlist-form.ts`.
-- [ ] **`SITE_URL`:** set it on the host so the canonical and Open Graph URLs are absolute.
 - [ ] **Analytics (optional):** pick a cookieless provider and set `PUBLIC_ANALYTICS_SRC`.
 - [ ] **Copyright year:** the footer's © year is set when the site is built, so rebuild at least once a year.
