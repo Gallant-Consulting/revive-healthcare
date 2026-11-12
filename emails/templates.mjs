@@ -76,13 +76,6 @@ const button = (href, label) =>
   `<a href="${esc(href)}" style="display:inline-block;padding:14px 22px;font-family:${sans};font-size:16px;line-height:1.2;font-weight:600;color:${c.white};text-decoration:none;border-radius:12px;">${label}</a>` +
   `</td></tr></table>`;
 
-/** The site's text-message card: stone panel, a small label and a teal care-team bubble. */
-const messageCard = (label, message) =>
-  `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:${c.stone};border-radius:20px;padding:22px;">` +
-  `<p style="margin:0 0 12px;font-family:${sans};font-size:12px;line-height:1.4;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:${c.inkSubtle};">${label}</p>` +
-  `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="max-width:86%;"><tr><td style="background:${c.tealMid};border-radius:18px 18px 18px 6px;padding:12px 16px;font-family:${sans};font-size:16px;line-height:1.5;color:${c.white};">${message}</td></tr></table>` +
-  `</td></tr></table>`;
-
 /** A cream card like the site's benefit cards: serif title, muted body. */
 const creamCard = (title, body) =>
   `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background:${c.cream};border-radius:16px;padding:22px 24px;">` +
@@ -192,8 +185,9 @@ export function buildEmails(d) {
           'We are a Direct Primary Care practice. One flat monthly membership covers same-day or next-day visits, unhurried appointments, and a care team you can reach by call, text, or email.',
         ) +
         paragraph('We keep our patient panel small so your doctor always has time for you.', true) +
-        spacer(24) +
-        messageCard('What happens next', esc(individualNext)) +
+        spacer(28) +
+        eyebrow('What happens next') +
+        paragraph(esc(individualNext), true) +
         spacer(28) +
         button(SITE_URL, 'Learn more about Revive'),
       footer: patientFooter(d.unsubscribeUrl),
