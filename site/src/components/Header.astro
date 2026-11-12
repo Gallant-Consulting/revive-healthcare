@@ -5,7 +5,16 @@ const joinHref = onHome ? '#join' : '/#join';
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="wordmark" href="/">Revive Healthcare</a>
+    <a class="wordmark" href="/">
+      <span class="wordmark__text">Revive Healthcare <span class="wordmark__last">Providers</span></span>
+      <!-- A flat line under the name that turns into a heartbeat just past its end. -->
+      <span class="wordmark__rule" aria-hidden="true">
+        <span class="wordmark__line"></span>
+        <svg class="wordmark__beat" viewBox="0 22 100 88" focusable="false">
+          <path d="M0 66H10L19 47L29 85L40 27L50 105L60 56L70 72L78 66H100" vector-effect="non-scaling-stroke"></path>
+        </svg>
+      </span>
+    </a>
     <a class="btn btn-primary site-header__cta" href={joinHref}>
       <!-- One wrapping span: inline-flex would drop the spaces between bare text runs. -->
       <span>Join <span class="desktop-only">the </span>waitlist</span>
@@ -21,7 +30,6 @@ const joinHref = onHome ? '#join' : '/#join';
 
   .site-header__inner {
     display: flex;
-    flex-wrap: wrap;
     gap: 12px;
     justify-content: space-between;
     align-items: center;
@@ -29,12 +37,18 @@ const joinHref = onHome ? '#join' : '/#join';
   }
 
   .wordmark {
+    /* The heartbeat keeps the trace's 100:88 shape. */
+    --beat-height: 24px;
+    --beat-width: calc(var(--beat-height) * 100 / 88);
+
     display: inline-flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
     min-height: 44px;
     font-family: var(--font-display);
-    font-size: var(--fs-4);
-    line-height: 1;
+    font-size: var(--fs-3);
+    line-height: 1.1;
     color: var(--ink);
     text-decoration: none;
   }
@@ -43,7 +57,42 @@ const joinHref = onHome ? '#join' : '/#join';
     color: var(--ink);
   }
 
+  /* Room at the end of the name, so the heartbeat sits just after it. */
+  .wordmark__text {
+    padding-right: var(--beat-width);
+  }
+
+  .wordmark__rule {
+    display: flex;
+    align-items: center;
+    height: 2px;
+    margin-top: 8px;
+  }
+
+  .wordmark__line {
+    flex: 1;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--pulse-red);
+  }
+
+  .wordmark__beat {
+    flex: none;
+    width: var(--beat-width);
+    height: var(--beat-height);
+    overflow: visible;
+  }
+
+  .wordmark__beat path {
+    fill: none;
+    stroke: var(--pulse-red);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
   .site-header__cta {
+    flex: none;
     padding: 0 16px;
     font-size: var(--fs-2);
     white-space: nowrap;
@@ -53,7 +102,15 @@ const joinHref = onHome ? '#join' : '/#join';
     display: none;
   }
 
-  /* Keeps the wordmark and button on one line at 360px. */
+  /* Too narrow for the name on one line: break before "Providers" so the wordmark is only
+     as wide as "Revive Healthcare", and the heartbeat sits right after the text. */
+  @media (max-width: 469px) {
+    .wordmark__last {
+      display: block;
+    }
+  }
+
+  /* Leaves the wordmark as much room as possible at 360px. */
   @media (max-width: 379px) {
     .site-header__cta {
       padding: 0 14px;
@@ -71,6 +128,10 @@ const joinHref = onHome ? '#join' : '/#join';
     }
 
     .wordmark {
+      --beat-height: 30px;
+
+      font-size: var(--fs-4);
+      line-height: 1;
       letter-spacing: 0.01em;
     }
 

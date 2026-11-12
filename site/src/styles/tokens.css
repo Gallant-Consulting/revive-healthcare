@@ -19,6 +19,7 @@
   --ring-unselected: #A9CBC6; /* empty ring on an unselected membership card */
   --panel-tint: #F2F6F5;      /* employer fields panel */
   --rule-footer: #E0DCD1;     /* footer divider, mobile */
+  --pulse-red: #DC2627;       /* heartbeat line under the wordmark (decorative) */
   /* The reference uses #9AA0A6 (2.6:1 on white). Darkened to reach the 3:1 that
      WCAG 1.4.11 asks of input borders, on white and on --panel-tint. */
   --field-border: #878D93;
