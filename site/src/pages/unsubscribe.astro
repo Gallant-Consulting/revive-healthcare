@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Unsubscribe | Revive Healthcare"
+  description="Stop receiving emails from Revive Healthcare Providers about the waitlist."
+  noindex
+>
+  <section class="container unsubscribe" data-unsubscribe>
+    <div class="unsubscribe__card">
+      <!-- Email security scanners open links automatically, so unsubscribing waits for this button. -->
+      <div data-view="confirm">
+        <h1 tabindex="-1">Unsubscribe from emails</h1>
+        <p>
+          We'll stop sending you emails about the Revive Healthcare Providers waitlist. To stop text messages, reply
+          STOP to any text from us.
+        </p>
+        <div class="unsubscribe__alert" role="alert" data-error></div>
+        <button type="button" class="btn btn-primary unsubscribe__button" data-confirm>Unsubscribe</button>
+        <noscript>
+          <p class="unsubscribe__noscript">
+            Please turn on JavaScript, or email <a href="mailto:office@rhcproviders.com">office@rhcproviders.com</a>
+            and we'll unsubscribe you.
+          </p>
+        </noscript>
+      </div>
+
+      <div data-view="done" hidden>
+        <h1 tabindex="-1">You're unsubscribed.</h1>
+        <p>
+          We won't send you any more emails about the waitlist. Changed your mind?
+          <a href="/#join">Join the waitlist again</a>.
+        </p>
+      </div>
+
+      <div data-view="invalid" hidden>
+        <h1 tabindex="-1">This link doesn't work.</h1>
+        <p>
+          To stop emails from us, write to <a href="mailto:office@rhcproviders.com">office@rhcproviders.com</a> and
+          we'll take care of it.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { RECORD_ID_PATTERN, requestUnsubscribe } from '../lib/unsubscribe';
+
+  const root = document.querySelector<HTMLElement>('[data-unsubscribe]');
+  if (root) {
+    const views = [...root.querySelectorAll<HTMLElement>('[data-view]')];
+    const button = root.querySelector<HTMLButtonElement>('[data-confirm]')!;
+    const error = root.querySelector<HTMLElement>('[data-error]')!;
+    const label = button.textContent?.trim() ?? 'Unsubscribe';
+    const id = new URLSearchParams(window.location.search).get('id')?.trim() ?? '';
+
+    const show = (name: string, focus = true) => {
+      for (const view of views) view.hidden = view.dataset.view !== name;
+      if (focus) root.querySelector<HTMLElement>(`[data-view="${name}"] h1`)?.focus();
+    };
+
+    if (!RECORD_ID_PATTERN.test(id)) show('invalid', false);
+
+    button.addEventListener('click', async () => {
+      error.replaceChildren();
+      button.disabled = true;
+      button.textContent = 'Unsubscribing…';
+      try {
+        await requestUnsubscribe(id);
+        show('done');
+      } catch (err) {
+        console.error(err);
+        const message = document.createElement('p');
+        message.append(
+          "We couldn't unsubscribe you just now. Please try again, or email ",
+          Object.assign(document.createElement('a'), { href: 'mailto:office@rhcproviders.com', textContent: 'office@rhcproviders.com' }),
+          '.',
+        );
+        error.replaceChildren(message);
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  }
+</script>
+
+<style>
+  .unsubscribe {
+    display: flex;
+    justify-content: center;
+    padding-top: 44px;
+    padding-bottom: 72px;
+  }
+
+  .unsubscribe__card {
+    width: 100%;
+    max-width: 560px;
+    padding: 24px;
+    border-radius: var(--radius-panel);
+    background: var(--white);
+  }
+
+  [data-view][hidden] {
+    display: none;
+  }
+
+  h1 {
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+    font-size: var(--fs-5);
+    line-height: 1.1;
+  }
+
+  p {
+    font-size: var(--fs-2);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .unsubscribe__button {
+    margin-top: 24px;
+    min-height: 52px;
+    padding: 0 28px;
+  }
+
+  .unsubscribe__noscript {
+    margin-top: 16px;
+  }
+
+  @media (min-width: 720px) {
+    .unsubscribe {
+      padding-top: 64px;
+      padding-bottom: 104px;
+    }
+
+    .unsubscribe__card {
+      padding: 40px;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Filled by the page script, so it can't use scoped styles. */
+  .unsubscribe__alert:not(:empty) {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid var(--error);
+    border-radius: var(--radius-input);
+    background: var(--error-tint);
+  }
+
+  .unsubscribe__alert p {
+    font-size: var(--fs-2);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+</style>

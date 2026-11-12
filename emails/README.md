@@ -8,6 +8,8 @@ The three emails sent when someone joins the waitlist on rhcproviders.com:
 | Employer confirmation | The person who signed up | Plan is Employer |
 | Team notice | internal@rhcproviders.com | Every sign-up |
 
+The two confirmations end with an **Unsubscribe** link to `rhcproviders.com/unsubscribe?id=<Airtable record ID>` (see the site README).
+
 They're sent from office@rhcproviders.com through Mailjet (the **RHC Providers** credential) by the n8n workflow **Revive Healthcare: waitlist sign-ups** on n8n.workgallantly.com.
 
 ## Files

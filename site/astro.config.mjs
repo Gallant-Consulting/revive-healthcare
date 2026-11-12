@@ -14,6 +14,7 @@ export default defineConfig({
     schema: {
       PUBLIC_FORM_ENDPOINT: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
       PUBLIC_ANALYTICS_SRC: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
+      PUBLIC_UNSUBSCRIBE_ENDPOINT: envField.string({ context: 'client', access: 'public', optional: true, url: true }),
     },
   },
   // Google Fonts, downloaded at build time and served from this site (no request to

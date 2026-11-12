@@ -23,6 +23,7 @@ const base = {
   utm: { source: 'flyer', medium: 'print', campaign: 'launch' },
   submittedAt: '2026-11-11T19:42:00.000Z',
   airtableUrl: 'https://airtable.com/appEFfIteG4mCetMv/tbldCPPr1PjAHVkwv/recEXAMPLE',
+  unsubscribeUrl: 'https://www.rhcproviders.com/unsubscribe?id=recEXAMPLE',
 };
 const samples = {
   individual: { ...base, plan: 'Individual' },
@@ -78,6 +79,7 @@ return {
     utm: { source: signup['UTM source'] ?? '', medium: signup['UTM medium'] ?? '', campaign: signup['UTM campaign'] ?? '' },
     submittedAt: signup['Submitted at'],
     airtableUrl: 'https://airtable.com/appEFfIteG4mCetMv/tbldCPPr1PjAHVkwv/' + $json.id,
+    unsubscribeUrl: SITE_URL + '/unsubscribe?id=' + $json.id,
   }),
 };
 `;

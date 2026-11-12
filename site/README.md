@@ -24,6 +24,7 @@ All of these are read **at build time** and baked into the static files, so a ch
 | Variable | Required | What it does |
 |---|---|---|
 | `PUBLIC_FORM_ENDPOINT` | For production | URL the waitlist form POSTs JSON to. If unset, `npm run dev` simulates a successful submission and a production build shows the form's error message. Must be a full URL. |
+| `PUBLIC_UNSUBSCRIBE_ENDPOINT` | For production | URL the `/unsubscribe` page POSTs `{ id }` to: the n8n workflow "Revive Healthcare: email unsubscribe", at `https://n8n.workgallantly.com/webhook/revive-unsubscribe`. If unset, the page shows an error and points people to office@rhcproviders.com. |
 | `PUBLIC_ANALYTICS_SRC` | No | URL of a **cookieless** analytics script (e.g. Plausible, Fathom). Adds one `<script defer>` tag when set; adds nothing when empty. Never put ad or social tracking pixels here. |
 | `SITE_URL` | Recommended | The site's absolute URL, e.g. `https://staging.example.com`. Used for the canonical link and to make `og:image` absolute, which link previews need. Set it in the host's build settings or the shell. It isn't read from `.env`. |
 
@@ -111,6 +112,14 @@ All backend code is in `src/lib/submit-waitlist.ts`. The endpoint must accept a 
 - **Success:** with `PUBLIC_FORM_ENDPOINT` empty, `npm run dev` logs the payload to the browser console and shows the success state.
 - **Failure:** set `PUBLIC_FORM_ENDPOINT=http://localhost:4321/nope` (the dev server returns 404), restart `npm run dev`, and submit.
 
+## Unsubscribing
+
+Each confirmation email ends with an **Unsubscribe** link to `/unsubscribe?id=<Airtable record ID>`. That page asks the person to press **Unsubscribe** before anything changes, because email security scanners open every link in an email automatically. The button POSTs the record ID to `PUBLIC_UNSUBSCRIBE_ENDPOINT`, and the n8n workflow sets **Email opt-in** to unchecked and **Unsubscribed at** to the current time in Airtable. Signing up again checks **Email opt-in** again.
+
+Text messages are separate: people reply STOP. Before sending any outreach email by hand, check **Email opt-in** on the person's Airtable record.
+
+The page is excluded from search results (`noindex`). The code is in `src/pages/unsubscribe.astro` and `src/lib/unsubscribe.ts`.
+
 ## Project structure
 
 ```
@@ -121,6 +130,7 @@ src/
   components/                 Header, Hero, Benefits, Join (selector + form), Field, Footer, LegalPage
   scripts/waitlist-form.ts    form behavior (validation, states, payload)
   lib/submit-waitlist.ts      the one module that talks to the backend
+  lib/unsubscribe.ts          posts unsubscribe requests (see Unsubscribing)
   pages/                      index, privacy, terms
 public/                       favicon.svg, og.png (both placeholders)
 ```

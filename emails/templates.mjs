@@ -144,23 +144,26 @@ ${footer}
 </html>`;
 }
 
-const patientFooter =
+const patientFooter = (unsubscribeUrl) =>
   `<p style="margin:0 0 4px;font-family:${serif};font-size:18px;line-height:1.4;color:${c.ink};">Revive Healthcare Providers</p>` +
   `<p style="margin:0 0 14px;">Cleveland, Ohio</p>` +
   `<p style="margin:0 0 10px;">If you are experiencing a medical emergency, call 911. Please don't send medical information by email.</p>` +
-  `<p style="margin:0;">You're receiving this because you joined the waitlist at ${link(SITE_URL, 'rhcproviders.com')}. ${link(`${SITE_URL}/privacy`, 'Privacy Statement')}</p>`;
+  `<p style="margin:0;">You're receiving this because you joined the waitlist at ${link(SITE_URL, 'rhcproviders.com')}. ${link(`${SITE_URL}/privacy`, 'Privacy Statement')}` +
+  (unsubscribeUrl ? ` · ${link(unsubscribeUrl, 'Unsubscribe')}` : '') +
+  `</p>`;
 
-const patientFooterText =
+const patientFooterText = (unsubscribeUrl) =>
   'Revive Healthcare Providers\nCleveland, Ohio\n\n' +
   "If you are experiencing a medical emergency, call 911. Please don't send medical information by email.\n\n" +
-  `You're receiving this because you joined the waitlist at rhcproviders.com. Privacy Statement: ${SITE_URL}/privacy`;
+  `You're receiving this because you joined the waitlist at rhcproviders.com. Privacy Statement: ${SITE_URL}/privacy` +
+  (unsubscribeUrl ? `\nUnsubscribe: ${unsubscribeUrl}` : '');
 
 // ---- The three emails ----
 
 /**
  * @param {object} d  One sign-up, as saved: plan ('Individual' | 'Employer'), firstName, lastName,
  *   email, phone (E.164), zip, company, employeeCount, referral, utm {source, medium, campaign},
- *   submittedAt (ISO 8601), airtableUrl.
+ *   submittedAt (ISO 8601), airtableUrl, unsubscribeUrl.
  * @returns {{ individual, employer, team }} each with { subject, html, text }.
  */
 export function buildEmails(d) {
@@ -193,7 +196,7 @@ export function buildEmails(d) {
         messageCard('What happens next', esc(individualNext)) +
         spacer(28) +
         button(SITE_URL, 'Learn more about Revive'),
-      footer: patientFooter,
+      footer: patientFooter(d.unsubscribeUrl),
     }),
     text:
       `Hi ${first},\n\n` +
@@ -202,7 +205,7 @@ export function buildEmails(d) {
       'We keep our patient panel small so your doctor always has time for you.\n\n' +
       `What happens next: ${individualNext}\n\n` +
       `Learn more: ${SITE_URL}\n\n` +
-      patientFooterText,
+      patientFooterText(d.unsubscribeUrl),
   };
 
   // Employer confirmation
@@ -231,7 +234,7 @@ export function buildEmails(d) {
         paragraph(esc(employerNext), true) +
         spacer(28) +
         button(SITE_URL, 'Learn more about Revive'),
-      footer: patientFooter,
+      footer: patientFooter(d.unsubscribeUrl),
     }),
     text:
       `Hi ${first},\n\n` +
@@ -240,7 +243,7 @@ export function buildEmails(d) {
       `Your team: ${company}${employees ? `, ${employees} employees` : ''}\n\n` +
       `What happens next: ${employerNext}\n\n` +
       `Learn more: ${SITE_URL}\n\n` +
-      patientFooterText,
+      patientFooterText(d.unsubscribeUrl),
   };
 
   // Team notice
