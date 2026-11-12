@@ -63,5 +63,10 @@ const ogImageAlt =
       <slot />
     </main>
     <Footer />
+    <script>
+      // Remember campaign codes (UTM) from the landing page for the rest of the visit.
+      import { rememberUtm } from '../lib/utm';
+      rememberUtm();
+    </script>
   </body>
 </html>

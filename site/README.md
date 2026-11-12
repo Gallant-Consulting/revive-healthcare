@@ -96,7 +96,7 @@ The form never collects date of birth, gender, address or medical free text.
 - `company` and `employeeCount` are sent only for `"plan": "employer"`.
 - `employeeCount` is one of `1-10`, `11-50`, `51-200`, `200+`.
 - `referral` is sent only if filled in.
-- `utm` values come from `utm_source`, `utm_medium` and `utm_campaign` in the page URL, or are `null`.
+- `utm` values come from `utm_source`, `utm_medium` and `utm_campaign` in the page URL, or are `null`. They're remembered for the rest of the visit (session storage, per browser tab), so someone who lands on any page from a campaign link and signs up later in the visit still carries them. A new campaign link replaces them. See `src/lib/utm.ts`.
 
 Any 2xx response counts as success. Anything else, a network error, or no response within 15 seconds shows the retry message.
 

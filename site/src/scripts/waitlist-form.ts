@@ -1,4 +1,5 @@
 import { submitWaitlist, type EmployeeCount, type Plan, type WaitlistPayload } from '../lib/submit-waitlist';
+import { currentUtm } from '../lib/utm';
 import { checkPhone, emailError, suggestEmail } from '../lib/validate';
 
 type Control = HTMLInputElement | HTMLSelectElement;
@@ -28,12 +29,6 @@ const VALIDATORS: Record<string, (control: Control) => string | null> = {
     (c as HTMLInputElement).checked ? null : 'Please agree to be contacted so we can reach you about membership.',
 };
 
-function readUtm(): WaitlistPayload['utm'] {
-  const params = new URLSearchParams(window.location.search);
-  const read = (key: string) => params.get(key)?.trim().slice(0, 200) || null;
-  return { source: read('utm_source'), medium: read('utm_medium'), campaign: read('utm_campaign') };
-}
-
 export function initWaitlistForm(root: HTMLElement) {
   const form = root.querySelector<HTMLFormElement>('[data-waitlist-form]');
   if (!form) return;
@@ -54,7 +49,7 @@ export function initWaitlistForm(root: HTMLElement) {
   form.noValidate = true;
 
   const submitLabel = submitButton.textContent?.trim() || 'Join the waitlist';
-  const utm = readUtm();
+  const utm = currentUtm();
   const edited = new Set<string>();
   let plan: Plan = 'individual';
   let sending = false;

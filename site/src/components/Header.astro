@@ -7,14 +7,14 @@ const joinHref = onHome ? '#join' : '/#join';
   <div class="container site-header__inner">
     <div class="brand">
       <a class="brand__name" href="/">Revive Healthcare <span class="brand__break">Providers</span></a>
-      <p class="brand__tagline">Reimagining Medicine. <span class="brand__break">Reviving Care.</span></p>
-      <!-- A flat line under the name and tagline that turns into a heartbeat just past their end. -->
+      <!-- A flat line under the name that turns into a heartbeat just past its end. -->
       <span class="brand__rule" aria-hidden="true">
         <span class="brand__line"></span>
         <svg class="brand__beat" viewBox="0 22 100 88" focusable="false">
           <path d="M0 66H10L19 47L29 85L40 27L50 105L60 56L70 72L78 66H100" vector-effect="non-scaling-stroke"></path>
         </svg>
       </span>
+      <p class="brand__tagline">Reimagining Medicine. <span class="brand__break">Reviving Care.</span></p>
     </div>
     <a class="btn btn-primary site-header__cta" href={joinHref}>
       <!-- One wrapping span: inline-flex would drop the spaces between bare text runs. -->
@@ -69,7 +69,7 @@ const joinHref = onHome ? '#join' : '/#join';
   }
 
   .brand__tagline {
-    margin-top: 6px;
+    margin-top: 10px;
     font-size: var(--fs-1);
     font-weight: 500;
     line-height: 1.35;
@@ -80,7 +80,7 @@ const joinHref = onHome ? '#join' : '/#join';
     display: flex;
     align-items: center;
     height: 2px;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .brand__line {
@@ -156,12 +156,12 @@ const joinHref = onHome ? '#join' : '/#join';
     }
 
     .brand__tagline {
-      margin-top: 8px;
+      margin-top: 12px;
       font-size: var(--fs-2);
     }
 
     .brand__rule {
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .site-header__cta {
